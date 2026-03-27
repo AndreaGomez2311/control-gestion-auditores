@@ -1,0 +1,27 @@
+import streamlit as st
+import pandas as pd
+
+st.set_page_config(page_title="Control de Gestión BDO", layout="wide")
+
+# Estilo BDO
+st.markdown("<style>.stApp {background-color: #ffffff;} h1 {color: #003399;}</style>", unsafe_allow_html=True)
+
+st.title("📈 Control de Gestión Clientes Auditoría")
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/BDO_logo.svg/1200px-BDO_logo.svg.png", width=150)
+
+# Simulación de datos extraídos del contrato analizado
+datos = {
+    'Cliente': ['BDO AUDITORES CONSULTORES LTDA', 'Cliente de Prueba'],
+    'RUT': ['77.548.780-1', '99.888.777-6'],
+    'Hrs Contratadas': [150, 100],
+    'Hrs Trabajadas': [185, 95],
+    'Meses en Pérdida': [3, 0]
+}
+df = pd.DataFrame(datos)
+
+st.write("### Dashboard de Rentabilidad Mensual")
+st.dataframe(df, use_container_width=True)
+
+for i, row in df.iterrows():
+    if row['Meses en Pérdida'] >= 3:
+        st.error(f"⚠️ ALERTA: El cliente {row['Cliente']} lleva 3 meses de pérdida. Revisar Cláusula Décimo Primero.")
